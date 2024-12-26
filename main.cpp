@@ -19,7 +19,8 @@ int main() {
   const uint number_of_bodies = 2;
   const std::array<Body, number_of_bodies> bodies{};
 
-  for (Body body : bodies) {
+  // Print to console
+  for (Body const &body : bodies) {
     std::cout << body.to_string() << std::endl;
   }
 }
