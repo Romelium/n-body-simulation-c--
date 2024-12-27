@@ -136,5 +136,35 @@ int main() {
         }
       }
     }
+
+    // Center all bodies around point (0, 0, 0). Prevents overflow or
+    // imprecision if bodies travel too far from point (0, 0, 0).
+    // Doesn't help if bodies are far from each other.
+    {
+      // Sum all the position of the bodies
+      double xsum = 0;
+      double ysum = 0;
+      double zsum = 0;
+      for (Body const &body : bodies) {
+        xsum += body.x;
+        ysum += body.y;
+        zsum += body.z;
+      }
+
+      // Average the sum all the position of the bodies which also the center
+      // point of all bodies
+      const uint number_of_bodies = bodies.size();
+      const double cx = xsum / number_of_bodies;
+      const double cy = ysum / number_of_bodies;
+      const double cz = zsum / number_of_bodies;
+
+      // Offset all bodies by the center point to make point (0, 0, 0) be the
+      // center of all bodies
+      for (Body &body : bodies) {
+        body.x -= cx;
+        body.y -= cy;
+        body.z -= cz;
+      }
+    }
   }
 }
