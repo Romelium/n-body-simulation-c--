@@ -6,6 +6,8 @@
 #include <ostream>
 #include <string>
 
+typedef unsigned int uint;
+
 struct Body {
   double x, y, z;
   double mass;
@@ -14,8 +16,6 @@ struct Body {
     return std::format("position: {}, {}, {} | mass: {}", x, y, z, mass);
   }
 };
-
-typedef unsigned int uint;
 
 int main() {
   const uint number_of_bodies = 2;
