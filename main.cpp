@@ -37,3 +37,10 @@ int main() {
     index++;
   }
 }
+
+double newton_law_of_universal_gravitation(
+    double gravitational_constant, double mass1, double mass2,
+    double distance_between_the_two_mass_centers) {
+  return gravitational_constant *
+         ((mass1 * mass2) / distance_between_the_two_mass_centers);
+}
