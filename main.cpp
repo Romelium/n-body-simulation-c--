@@ -105,7 +105,7 @@ std::string create_map_of_bodies(const uint height, const uint width,
 }
 
 int main() {
-  const uint number_of_bodies = 2;
+  const uint number_of_bodies = 5;
   const double gravitational_constant = 1;
   const uint updates_per_second = 10;
   std::array<Body, number_of_bodies> bodies{};
