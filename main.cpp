@@ -44,6 +44,7 @@ struct Body {
 
 int main() {
   const uint number_of_bodies = 2;
+  const double gravitational_constant = 1;
   std::array<Body, number_of_bodies> bodies{};
 
   // Init bodies
@@ -95,7 +96,7 @@ int main() {
                        bodies_old[i2].x, bodies_old[i2].y, bodies_old[i2].z);
 
           const double force = newton_law_of_universal_gravitation(
-              1, bodies_old[i1].mass, bodies_old[i2].mass,
+              gravitational_constant, bodies_old[i1].mass, bodies_old[i2].mass,
               distance_between_the_two_mass_centers);
 
           // Get the direction of the force for the first body
