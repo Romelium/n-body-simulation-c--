@@ -125,6 +125,7 @@ int main() {
   while (true) {
     // Print to console. Do this first to confirm the initial state before
     // calculations
+    clear_console();
     uint index = 0;
     for (Body const &body : bodies) {
       std::cout << index << " | " << body.to_string() << std::endl;
