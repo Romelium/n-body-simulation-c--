@@ -32,7 +32,7 @@ double distance(double x1, double y1, double z1, double x2, double y2,
 }
 
 struct Body {
-  double x, y, z; // position of the mass centers will be the body
+  double x, y, z;    // position of the mass centers will be the body
   double vx, vy, vz; // velocity
   double mass;
 
@@ -67,6 +67,13 @@ int main() {
     for (Body const &body : bodies) {
       std::cout << index << " | " << body.to_string() << std::endl;
       index++;
+    }
+
+    // Update the position of the bodies by their velocity.
+    for (Body &body : bodies) {
+      body.x += body.vx;
+      body.y += body.vy;
+      body.z += body.vz;
     }
 
     // Update the velocity of the bodies by acceleration using newton's law of
