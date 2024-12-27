@@ -61,10 +61,72 @@ int main() {
 
   // Update loop
   while (true) {
+    // Print to console. Do this first to confirm the initial state before
+    // calculations
     uint index = 0;
     for (Body const &body : bodies) {
       std::cout << index << " | " << body.to_string() << std::endl;
       index++;
+    }
+
+    // Update the velocity of the bodies by acceleration using newton's law of
+    // universal gravitation.
+    {
+      // copy bodies to use their unmodified positions to not have acceleration
+      // calculations depend on the order of bodies in the array
+      std::array<Body, number_of_bodies> bodies_old = bodies;
+
+      // Avoid bodies that already have calculations for each other by looping
+      // all combinations. Each calculation will update both bodies at the same
+      // time to not repeat the same calculations twice.
+      for (uint i1 = 0, n = bodies.size(); i1 < n - 1; i1++) {
+        for (uint i2 = i1 + 1; i2 < n; i2++) {
+
+          // the mass centers will be the bodies' x, y, z members
+          const double distance_between_the_two_mass_centers =
+              distance(bodies_old[i1].x, bodies_old[i1].y, bodies_old[i1].z,
+                       bodies_old[i2].x, bodies_old[i2].y, bodies_old[i2].z);
+
+          const double force = newton_law_of_universal_gravitation(
+              1, bodies_old[i1].mass, bodies_old[i2].mass,
+              distance_between_the_two_mass_centers);
+
+          // Get the direction of the force for the first body
+          const double x1 = (bodies_old[i2].x - bodies_old[i1].x);
+          const double y1 = (bodies_old[i2].y - bodies_old[i1].y);
+          const double z1 = (bodies_old[i2].z - bodies_old[i1].z);
+
+          // Normalize the first force direction. The magnitude will be the
+          // force calculated by newton's law of universal gravitation
+          const double magnitude1 = magnitude(x1, y1, z1);
+          const double x1_normalized = x1 / magnitude1;
+          const double y1_normalized = y1 / magnitude1;
+          const double z1_normalized = z1 / magnitude1;
+
+          // Multiply by force to set the magnitude of the first force
+          // direction. Account for mass for final expression
+          const double x1_force = x1_normalized * force;
+          const double y1_force = y1_normalized * force;
+          const double z1_force = z1_normalized * force;
+
+          // The second force direction for the second body is just the opposite
+          // of the first
+          const double x2_force = -x1_force;
+          const double y2_force = -y1_force;
+          const double z2_force = -z1_force;
+
+          // Calculate and apply the acceleration to the velocity of the first
+          // body
+          bodies[i1].vx += x1_force / bodies[i1].mass;
+          bodies[i1].vy += y1_force / bodies[i1].mass;
+          bodies[i1].vz += z1_force / bodies[i1].mass;
+
+          // Do do the same for the second body
+          bodies[i2].vx += x2_force / bodies[i2].mass;
+          bodies[i2].vy += y2_force / bodies[i2].mass;
+          bodies[i2].vz += z2_force / bodies[i2].mass;
+        }
+      }
     }
   }
 }
