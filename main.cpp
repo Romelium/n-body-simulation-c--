@@ -15,8 +15,7 @@ double newton_law_of_universal_gravitation(
          ((mass1 * mass2) / distance_between_the_two_mass_centers);
 }
 
-double magnitude(double x, double y, double z)
-{
+double magnitude(double x, double y, double z) {
   return sqrt(x * x + y * y + z * z);
 }
 
