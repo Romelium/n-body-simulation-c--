@@ -146,7 +146,7 @@ int main() {
       std::cout << index << " | " << body.to_string() << std::endl;
       index++;
     }
-    std::cout << create_map_of_bodies(32, 32, bodies);
+    std::cout << create_map_of_bodies(16, 32, bodies);
 
     // Update the position of the bodies by their velocity.
     for (Body &body : bodies) {
