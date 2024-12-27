@@ -37,7 +37,8 @@ struct Body {
   double mass;
 
   std::string to_string() const {
-    return std::format("position: {}, {}, {} | velocity: {}, {}, {} | mass: {}", x, y, z, vx, vy, vz, mass);
+    return std::format("position: {}, {}, {} | velocity: {}, {}, {} | mass: {}",
+                       x, y, z, vx, vy, vz, mass);
   }
 };
 
