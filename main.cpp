@@ -32,7 +32,7 @@ double distance(double x1, double y1, double z1, double x2, double y2,
 }
 
 struct Body {
-  double x, y, z;
+  double x, y, z; // position of the mass centers will be the body
   double vx, vy, vz; // velocity
   double mass;
 
