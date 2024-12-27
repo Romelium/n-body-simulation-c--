@@ -31,7 +31,9 @@ int main() {
   }
 
   // Print to console
+  uint index = 0;
   for (Body const &body : bodies) {
-    std::cout << body.to_string() << std::endl;
+    std::cout << index << " | " << body.to_string() << std::endl;
+    index++;
   }
 }
