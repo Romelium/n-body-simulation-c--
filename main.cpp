@@ -1,4 +1,5 @@
 #include <array>
+#include <chrono>
 #include <cmath>
 #include <cstdlib>
 #include <format>
@@ -106,6 +107,7 @@ std::string create_map_of_bodies(const uint height, const uint width,
 int main() {
   const uint number_of_bodies = 2;
   const double gravitational_constant = 1;
+  const uint updates_per_second = 10;
   std::array<Body, number_of_bodies> bodies{};
 
   // Init bodies
@@ -122,7 +124,20 @@ int main() {
   }
 
   // Update loop
+  std::chrono::time_point last_time = std::chrono::high_resolution_clock::now();
   while (true) {
+    std::chrono::time_point now_time =
+        std::chrono::high_resolution_clock::now();
+    // Calculate time difference from the last update and now in seconds
+    std::chrono::duration<double> time_delta = now_time - last_time;
+
+    // Set how many of seconds is needed to pass to update. As 'seconds', it means a fraction of a section.
+    const double seconds_to_update = 1/(double)updates_per_second;
+    // Skip loop iteration if the seconds from the last update is below the seconds needed to pass
+    if (time_delta.count() < seconds_to_update)
+      continue;
+    last_time = now_time; // Set this as the last update
+
     // Print to console. Do this first to confirm the initial state before
     // calculations
     clear_console();
