@@ -153,7 +153,6 @@ int main() {
 
       // Average the sum all the position of the bodies which also the center
       // point of all bodies
-      const uint number_of_bodies = bodies.size();
       const double cx = xsum / number_of_bodies;
       const double cy = ysum / number_of_bodies;
       const double cz = zsum / number_of_bodies;
