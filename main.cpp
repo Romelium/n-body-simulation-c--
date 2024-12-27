@@ -1,4 +1,5 @@
 #include <array>
+#include <cstdlib>
 #include <format>
 #include <iostream>
 #include <ostream>
@@ -21,10 +22,12 @@ int main() {
 
   // Init bodies
   for (Body &body : bodies) {
-    body.x = 0;
-    body.y = 0;
-    body.z = 0;
-    body.mass = 1;
+    auto rand01double = []() { return (double)(rand()) / RAND_MAX; };
+
+    body.x = rand01double();
+    body.y = rand01double();
+    body.z = rand01double();
+    body.mass = rand01double();
   }
 
   // Print to console
