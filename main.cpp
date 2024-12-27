@@ -29,7 +29,7 @@ double distance(double x1, double y1, double z1, double x2, double y2,
   double z = (z1 - z2);
 
   // Get the magnitude of difference
-  return sqrt(x * x + y * y + z * z);
+  return magnitude(x, y, z);
 }
 
 struct Body {
