@@ -15,6 +15,11 @@ double newton_law_of_universal_gravitation(
          ((mass1 * mass2) / distance_between_the_two_mass_centers);
 }
 
+double magnitude(double x, double y, double z)
+{
+  return sqrt(x * x + y * y + z * z);
+}
+
 double distance(double x1, double y1, double z1, double x2, double y2,
                 double z2) {
   // We get the difference of the two points. Distance is just the magnitude of
