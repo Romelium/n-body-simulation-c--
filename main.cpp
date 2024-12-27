@@ -46,7 +46,7 @@ int main() {
 
   // Init bodies
   for (Body &body : bodies) {
-    auto rand01double = []() { return (double)(rand()) / RAND_MAX; };
+    const auto rand01double = []() { return (double)(rand()) / RAND_MAX; };
 
     body.x = rand01double();
     body.y = rand01double();
