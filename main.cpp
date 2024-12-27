@@ -110,6 +110,9 @@ int main() {
   const uint updates_per_second = 10;
   std::array<Body, number_of_bodies> bodies{};
 
+  // Set random seed for rand function
+  srand(time(NULL));
+
   // Init bodies
   for (Body &body : bodies) {
     const auto rand01double = []() { return (double)(rand()) / RAND_MAX; };
@@ -131,9 +134,11 @@ int main() {
     // Calculate time difference from the last update and now in seconds
     std::chrono::duration<double> time_delta = now_time - last_time;
 
-    // Set how many of seconds is needed to pass to update. As 'seconds', it means a fraction of a section.
-    const double seconds_to_update = 1/(double)updates_per_second;
-    // Skip loop iteration if the seconds from the last update is below the seconds needed to pass
+    // Set how many of seconds is needed to pass to update. As 'seconds', it
+    // means a fraction of a section.
+    const double seconds_to_update = 1 / (double)updates_per_second;
+    // Skip loop iteration if the seconds from the last update is below the
+    // seconds needed to pass
     if (time_delta.count() < seconds_to_update)
       continue;
     last_time = now_time; // Set this as the last update
