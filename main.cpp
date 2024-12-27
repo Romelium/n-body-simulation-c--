@@ -81,7 +81,7 @@ int main() {
     {
       // copy bodies to use their unmodified positions to not have acceleration
       // calculations depend on the order of bodies in the array
-      std::array<Body, number_of_bodies> bodies_old = bodies;
+      const std::array<Body, number_of_bodies> bodies_old = bodies;
 
       // Avoid bodies that already have calculations for each other by looping
       // all combinations. Each calculation will update both bodies at the same
