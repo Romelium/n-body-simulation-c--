@@ -1,4 +1,6 @@
 #include <array>
+#include <cmath>
+#include <cmath>
 #include <cstdlib>
 #include <format>
 #include <iostream>
@@ -43,4 +45,14 @@ double newton_law_of_universal_gravitation(
     double distance_between_the_two_mass_centers) {
   return gravitational_constant *
          ((mass1 * mass2) / distance_between_the_two_mass_centers);
+}
+
+double distance(double x1, double y1, double z1, double x2, double y2, double z2) {
+  // We get the difference of the two points. Distance is just the magnitude of the difference a point to a other point 
+  double x = (x1-x2);
+  double y = (y1-y2);
+  double z = (z1-z2);
+
+  // Get the magnitude of difference
+  return sqrt(x*x + y*y + z*z);
 }
