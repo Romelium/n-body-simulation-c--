@@ -59,10 +59,12 @@ int main() {
     body.mass = rand01double();
   }
 
-  // Print to console
-  uint index = 0;
-  for (Body const &body : bodies) {
-    std::cout << index << " | " << body.to_string() << std::endl;
-    index++;
+  // Update loop
+  while (true) {
+    uint index = 0;
+    for (Body const &body : bodies) {
+      std::cout << index << " | " << body.to_string() << std::endl;
+      index++;
+    }
   }
 }
