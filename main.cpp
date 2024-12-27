@@ -5,6 +5,7 @@
 #include <iostream>
 #include <ostream>
 #include <string>
+#include <vector>
 
 typedef unsigned int uint;
 
@@ -42,6 +43,53 @@ struct Body {
   }
 };
 
+// Create a string of a map of the bodies relative to each other.
+// Need more than two bodies to be useful
+// Comment out z cause only x and y is accounted for now.
+template <size_t size>
+std::string create_map_of_bodies(const uint height, const uint width,
+                                 const std::array<Body, size> &bodies) {
+  // Get the bounds of the area that the bodies are in.
+  double highest_x, highest_y /* , highest_z */;
+  double lowest_x, lowest_y /* , lowest_z */;
+  highest_x = highest_y = /* highest_z =  */ std::numeric_limits<double>::min();
+  lowest_x = lowest_y = /* lowest_z =  */ std::numeric_limits<double>::max();
+  for (Body const &body : bodies) {
+    if (body.x > highest_x)
+      highest_x = body.x;
+    if (body.y > highest_y)
+      highest_y = body.y;
+    // if (body.z > highest_z)
+    //   highest_z = body.z;
+    if (body.x < lowest_x)
+      lowest_x = body.x;
+    if (body.y < lowest_y)
+      lowest_y = body.y;
+    // if (body.z < lowest_z)
+    //   lowest_z = body.z;
+  }
+
+  std::vector<std::string> lines{height, std::string(width, ' ')};
+  for (Body const &body : bodies) {
+    // get map index positon of body by inverse lerp using bounds
+    const uint x =
+        round((body.x - lowest_x) / (highest_x - lowest_x) * (width - 1));
+    const uint y =
+        round((body.y - lowest_y) / (highest_y - lowest_y) * (height - 1));
+    // const uint z = (body.z - lowest_z) / (highest_z - lowest_z);
+
+    lines[y][x] = '*';
+  }
+
+  std::string output = "";
+  // append all lines to output
+  for (std::string const &line : lines) {
+    output += line + '\n';
+  }
+
+  return output;
+}
+
 int main() {
   const uint number_of_bodies = 2;
   const double gravitational_constant = 1;
@@ -69,6 +117,7 @@ int main() {
       std::cout << index << " | " << body.to_string() << std::endl;
       index++;
     }
+    std::cout << create_map_of_bodies(32, 32, bodies);
 
     // Update the position of the bodies by their velocity.
     for (Body &body : bodies) {
