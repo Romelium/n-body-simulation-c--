@@ -33,10 +33,11 @@ double distance(double x1, double y1, double z1, double x2, double y2,
 
 struct Body {
   double x, y, z;
+  double vx, vy, vz; // velocity
   double mass;
 
   std::string to_string() const {
-    return std::format("position: {}, {}, {} | mass: {}", x, y, z, mass);
+    return std::format("position: {}, {}, {} | velocity: {}, {}, {} | mass: {}", x, y, z, vx, vy, vz, mass);
   }
 };
 
@@ -51,6 +52,9 @@ int main() {
     body.x = rand01double();
     body.y = rand01double();
     body.z = rand01double();
+    body.vx = rand01double();
+    body.vy = rand01double();
+    body.vz = rand01double();
     body.mass = rand01double();
   }
 
