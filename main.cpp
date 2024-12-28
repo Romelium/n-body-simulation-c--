@@ -137,7 +137,12 @@ std::string create_map_of_bodies(const uint height, const uint width,
 }
 
 int main() {
-  const uint number_of_bodies = 5;
+  // Avoid using large numbers (e.g., >25). At high values, the simulation may
+  // seem static, but it's actually not. The bodies start off tightly packed,
+  // causing extreme gravitational attraction and an implosion. This results in
+  // the bodies being expelled at high velocities, appearing stationary relative
+  // to each other.
+  const uint number_of_bodies = 25;
   const double gravitational_constant = 1;
   const uint updates_per_second = 10;
   std::array<Body, number_of_bodies> bodies{};
