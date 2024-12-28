@@ -176,26 +176,23 @@ int main() {
       continue;
     last_time = now_time; // Set this as the last update
 
-    // Print to console. Do this first to confirm the initial state before
-    // calculations
+    // Clear all text in console. Avoid cluttering the console.
     clear_console();
-    uint index = 0;
-    for (Body const &body : bodies) {
-      std::cout << index << " | " << body.to_string() << std::endl;
-      index++;
-    }
 
-    // set map height and width by the terminal height and width every update
-    int height, width;
-    get_terminal_size(width, height);
-    std::cout << create_map_of_bodies(
-        height, width, bodies); // implicit int to uint conversion
+    // Print map to console.
+    {
+      // set map height and width by the terminal height and width every update
+      int height, width;
+      get_terminal_size(width, height);
+      std::cout << create_map_of_bodies(
+          height, width, bodies); // implicit int to uint conversion
 
-    // Update the position of the bodies by their velocity.
-    for (Body &body : bodies) {
-      body.x += body.vx;
-      body.y += body.vy;
-      body.z += body.vz;
+      // Update the position of the bodies by their velocity.
+      for (Body &body : bodies) {
+        body.x += body.vx;
+        body.y += body.vy;
+        body.z += body.vz;
+      }
     }
 
     // Update the velocity of the bodies by acceleration using newton's law of
