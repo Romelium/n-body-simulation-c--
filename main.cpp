@@ -184,7 +184,12 @@ int main() {
       std::cout << index << " | " << body.to_string() << std::endl;
       index++;
     }
-    std::cout << create_map_of_bodies(16, 32, bodies);
+
+    // set map height and width by the terminal height and width every update
+    int height, width;
+    get_terminal_size(width, height);
+    std::cout << create_map_of_bodies(
+        height, width, bodies); // implicit int to uint conversion
 
     // Update the position of the bodies by their velocity.
     for (Body &body : bodies) {
