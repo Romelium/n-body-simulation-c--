@@ -159,6 +159,7 @@ int main() {
   }
 
   // Update loop
+  uint updateCount = 0;
   std::chrono::time_point last_time = std::chrono::high_resolution_clock::now();
   while (true) {
     std::chrono::time_point now_time =
@@ -193,6 +194,9 @@ int main() {
         body.z += body.vz;
       }
     }
+
+    // Print the update count at the start of the last line. Use '\r' to write at the start of last line 
+    std::cout << '\r' << updateCount;
 
     // Update the velocity of the bodies by acceleration using newton's law of
     // universal gravitation.
@@ -282,5 +286,6 @@ int main() {
         body.z -= cz;
       }
     }
+    updateCount++;
   }
 }
