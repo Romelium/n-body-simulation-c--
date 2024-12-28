@@ -195,7 +195,8 @@ int main() {
       }
     }
 
-    // Print the update count at the start of the last line. Use '\r' to write at the start of last line 
+    // Print the update count at the start of the last line. Use '\r' to write
+    // at the start of last line
     std::cout << '\r' << updateCount;
 
     // Update the velocity of the bodies by acceleration using newton's law of
