@@ -64,24 +64,31 @@ template <size_t size>
 std::string create_map_of_bodies(const uint height, const uint width,
                                  const std::array<Body, size> &bodies) {
   // Get the bounds of the area that the bodies are in.
-  double highest_x, highest_y /* , highest_z */;
-  double lowest_x, lowest_y /* , lowest_z */;
-  highest_x = highest_y = /* highest_z =  */ std::numeric_limits<double>::min();
-  lowest_x = lowest_y = /* lowest_z =  */ std::numeric_limits<double>::max();
+  double highest_x, highest_y, highest_z;
+  double lowest_x, lowest_y, lowest_z;
+  highest_x = highest_y = highest_z = std::numeric_limits<double>::min();
+  lowest_x = lowest_y = lowest_z = std::numeric_limits<double>::max();
   for (Body const &body : bodies) {
     if (body.x > highest_x)
       highest_x = body.x;
     if (body.y > highest_y)
       highest_y = body.y;
-    // if (body.z > highest_z)
-    //   highest_z = body.z;
+    if (body.z > highest_z)
+      highest_z = body.z;
     if (body.x < lowest_x)
       lowest_x = body.x;
     if (body.y < lowest_y)
       lowest_y = body.y;
-    // if (body.z < lowest_z)
-    //   lowest_z = body.z;
+    if (body.z < lowest_z)
+      lowest_z = body.z;
   }
+
+  // set the characters to be used to represent the z position of bodies.
+  // the lowest z position will have the smallest character and the highest z
+  // positon will have the biggest character.
+  std::array z_characters = {'.', '\'', ':', '-', '_', '^', '+', '=',
+                             '~', '*',  'o', 'O', '#', '%', '&', '@'};
+  uint z_size = z_characters.size();
 
   std::vector<std::string> lines{height, std::string(width, ' ')};
   for (Body const &body : bodies) {
@@ -90,9 +97,10 @@ std::string create_map_of_bodies(const uint height, const uint width,
         round((body.x - lowest_x) / (highest_x - lowest_x) * (width - 1));
     const uint y =
         round((body.y - lowest_y) / (highest_y - lowest_y) * (height - 1));
-    // const uint z = (body.z - lowest_z) / (highest_z - lowest_z);
+    const uint z = round((body.z - lowest_z) / (highest_z - lowest_z) *
+                         (z_size - 1));
 
-    lines[y][x] = '*';
+    lines[y][x] = z_characters[z];
   }
 
   std::string output = "";
