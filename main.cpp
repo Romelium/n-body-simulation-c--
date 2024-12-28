@@ -10,6 +10,31 @@
 
 typedef unsigned int uint;
 
+// https://stackoverflow.com/a/62485211/17921095
+#if defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
+#define NOMINMAX // prevent can't call ::max or ::min because minwindef.h
+                 // defines "max" or "min"
+                 // https://stackoverflow.com/a/22744273/17921095
+#include <Windows.h>
+#elif defined(__linux__) || defined(__APPLE__)
+#include <sys/ioctl.h>
+#endif // Windows/Linux
+void get_terminal_size(int &width, int &height) {
+#if defined(_WIN32)
+  CONSOLE_SCREEN_BUFFER_INFO csbi;
+  GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+  width = (int)(csbi.srWindow.Right - csbi.srWindow.Left + 1);
+  height = (int)(csbi.srWindow.Bottom - csbi.srWindow.Top + 1);
+#elif defined(__linux__) || defined(__APPLE__)
+  struct winsize w;
+  ioctl(fileno(stdout), TIOCGWINSZ, &w);
+  width = (int)(w.ws_col);
+  height = (int)(w.ws_row);
+#endif // Windows/Linux
+}
+
 // https://stackoverflow.com/a/52895729/17921095
 void clear_console() {
 #if defined _WIN32
@@ -97,8 +122,8 @@ std::string create_map_of_bodies(const uint height, const uint width,
         round((body.x - lowest_x) / (highest_x - lowest_x) * (width - 1));
     const uint y =
         round((body.y - lowest_y) / (highest_y - lowest_y) * (height - 1));
-    const uint z = round((body.z - lowest_z) / (highest_z - lowest_z) *
-                         (z_size - 1));
+    const uint z =
+        round((body.z - lowest_z) / (highest_z - lowest_z) * (z_size - 1));
 
     lines[y][x] = z_characters[z];
   }
