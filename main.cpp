@@ -147,7 +147,7 @@ int main() {
 
   // Init bodies
   for (Body &body : bodies) {
-    const auto rand01double = []() { return (double)(rand()) / RAND_MAX * number_of_bodies; };
+    const auto rand01double = []() { return (double)(rand()) / RAND_MAX; };
     const auto randndouble = [&]() { return rand01double() * number_of_bodies; };
 
     // scale position of bodies by the number of bodies
