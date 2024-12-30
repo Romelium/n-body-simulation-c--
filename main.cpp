@@ -137,7 +137,7 @@ std::string create_map_of_bodies(const uint height, const uint width,
 }
 
 int main() {
-  const uint number_of_bodies = 500;
+  const uint number_of_bodies = 1000;
   const double gravitational_constant = 1;
   const uint updates_per_second = 10;
   std::array<Body, number_of_bodies> bodies{};
@@ -148,7 +148,8 @@ int main() {
   // Init bodies
   for (Body &body : bodies) {
     const auto rand01double = []() { return (double)(rand()) / RAND_MAX; };
-    const auto randndouble = [&]() { return rand01double() * number_of_bodies; };
+    const auto randn1to1double = [&]() { return rand01double()*2-1; };
+    const auto randndouble = [&]() { return randn1to1double() * number_of_bodies; };
 
     // scale position of bodies by the number of bodies
     body.x = randndouble();
